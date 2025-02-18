@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .display {
+      width: 100%;
+      height: 50px;
+      margin-bottom: 10px;
+      text-align: right;
+      padding: 10px;
+      font-size: 24px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    .keys {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      padding: 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      border-radius: 3px;
+    }
+    button.operator {
+      background: #f9a825;
+      color: #fff;
+    }
+    button.equal {
+      grid-column: span 2;
+      background: #43a047;
+      color: #fff;
+    }
+    button.clear {
+      background: #e53935;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" class="display" id="display" disabled>
+    <div class="keys">
+      <button class="clear" id="clear">C</button>
+      <button id="divide" class="operator">/</button>
+      <button id="multiply" class="operator">*</button>
+      <button id="backspace">←</button>
+      <button class="num">7</button>
+      <button class="num">8</button>
+      <button class="num">9</button>
+      <button id="subtract" class="operator">-</button>
+      <button class="num">4</button>
+      <button class="num">5</button>
+      <button class="num">6</button>
+      <button id="add" class="operator">+</button>
+      <button class="num">1</button>
+      <button class="num">2</button>
+      <button class="num">3</button>
+      <button id="equal" class="equal">=</button>
+      <button class="num">0</button>
+      <button class="num">.</button>
+    </div>
+  </div>
+  <script>
+    const display = document.getElementById('display');
+    const buttons = document.querySelectorAll('button');
+    
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.id === 'clear') {
+          display.value = '';
+        } else if (button.id === 'equal') {
+          try {
+            display.value = eval(display.value);
+          } catch {
+            display.value = 'Ошибка';
+          }
+        } else if (button.id === 'backspace') {
+          display.value = display.value.slice(0, -1);
+        } else {
+          display.value += button.textContent;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Выбор цвета и конвертер</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ecf0f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input[type="color"] {
+      width: 100px;
+      height: 100px;
+      border: none;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Выбор цвета</h1>
+    <input type="color" id="colorPicker" value="#3498db">
+    <div class="result" id="result">
+      Hex: #3498db<br>
+      RGB: (52, 152, 219)
+    </div>
+  </div>
+  <script>
+    const colorPicker = document.getElementById('colorPicker');
+    const resultEl = document.getElementById('result');
+    
+    function hexToRGB(hex) {
+      const bigint = parseInt(hex.slice(1), 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `(${r}, ${g}, ${b})`;
+    }
+    
+    colorPicker.addEventListener('input', () => {
+      const hex = colorPicker.value;
+      const rgb = hexToRGB(hex);
+      resultEl.innerHTML = `Hex: ${hex}<br>RGB: ${rgb}`;
+    });
+  </script>
+</body>
+</html>

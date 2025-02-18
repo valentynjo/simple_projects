@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Викторина</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .quiz-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    .question {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #f9f9f9;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="question" id="question">Вопрос</div>
+    <div class="options" id="options"></div>
+    <div class="result" id="result"></div>
+    <button id="next" style="display:none; margin-top: 10px;">Следующий вопрос</button>
+  </div>
+  <script>
+    const quizData = [
+      {
+        question: "Какой язык используется для создания интерактивности на веб-страницах?",
+        options: ["HTML", "CSS", "JavaScript", "Python"],
+        answer: "JavaScript"
+      },
+      {
+        question: "Что означает HTML?",
+        options: ["HyperText Markup Language", "HighText Machine Language", "HyperTabular Markup Language", "None of these"],
+        answer: "HyperText Markup Language"
+      },
+      {
+        question: "Какой тег используется для подключения CSS в HTML?",
+        options: ["<link>", "<style>", "<script>", "<meta>"],
+        answer: "<link>"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const resultEl = document.getElementById('result');
+    const nextBtn = document.getElementById('next');
+
+    function loadQuestion() {
+      const currentData = quizData[currentQuestion];
+      questionEl.textContent = currentData.question;
+      optionsEl.innerHTML = "";
+      resultEl.textContent = "";
+      nextBtn.style.display = "none";
+      
+      currentData.options.forEach(option => {
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.addEventListener('click', () => selectOption(option));
+        optionsEl.appendChild(button);
+      });
+    }
+
+    function selectOption(selected) {
+      const currentData = quizData[currentQuestion];
+      const buttons = optionsEl.getElementsByTagName('button');
+      for (let btn of buttons) {
+        btn.disabled = true;
+        if (btn.textContent === currentData.answer) {
+          btn.style.backgroundColor = "#4caf50";
+        }
+        if (btn.textContent === selected && selected !== currentData.answer) {
+          btn.style.backgroundColor = "#f44336";
+        }
+      }
+      if (selected === currentData.answer) {
+        score++;
+        resultEl.textContent = "Правильно!";
+      } else {
+        resultEl.textContent = "Неправильно!";
+      }
+      
+      nextBtn.style.display = "block";
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        questionEl.textContent = "Викторина окончена!";
+        optionsEl.innerHTML = "";
+        resultEl.textContent = `Ваш результат: ${score} из ${quizData.length}`;
+        nextBtn.style.display = "none";
+      }
+    });
+
+    loadQuestion();
+  </script>
+</body>
+</html>

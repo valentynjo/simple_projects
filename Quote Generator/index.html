@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор цитат</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .quote-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 600px;
+    }
+    .quote {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .author {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #3498db;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="quote-container">
+    <div class="quote" id="quote">Нажмите кнопку, чтобы получить цитату</div>
+    <div class="author" id="author"></div>
+    <button id="newQuote">Новая цитата</button>
+  </div>
+  <script>
+    const quotes = [
+      { quote: "Жизнь – это то, что происходит, пока вы строите планы.", author: "Джон Леннон" },
+      { quote: "Будущее принадлежит тем, кто верит в красоту своих мечтаний.", author: "Элеанор Рузвельт" },
+      { quote: "Нет ничего невозможного, само слово говорит: 'Я могу!'", author: "Одри Хепберн" },
+      { quote: "Делай то, что можешь, с тем, что имеешь, там, где ты есть.", author: "Теодор Рузвельт" }
+    ];
+    
+    const quoteEl = document.getElementById('quote');
+    const authorEl = document.getElementById('author');
+    const newQuoteBtn = document.getElementById('newQuote');
+    
+    function generateQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const randomQuote = quotes[randomIndex];
+      quoteEl.textContent = `"${randomQuote.quote}"`;
+      authorEl.textContent = `— ${randomQuote.author}`;
+    }
+    
+    newQuoteBtn.addEventListener('click', generateQuote);
+  </script>
+</body>
+</html>

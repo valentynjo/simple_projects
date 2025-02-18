@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Учёт расходов</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    form input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    form button {
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      border-radius: 3px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    li button {
+      background: red;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 5px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Учёт расходов</h1>
+    <form id="expenseForm">
+      <input type="text" id="description" placeholder="Описание" required>
+      <input type="number" id="amount" placeholder="Сумма" required>
+      <button type="submit">Добавить</button>
+    </form>
+    <ul id="expenseList"></ul>
+    <div class="total" id="total">Общая сумма: 0</div>
+  </div>
+  <script>
+    const expenseForm = document.getElementById('expenseForm');
+    const descriptionInput = document.getElementById('description');
+    const amountInput = document.getElementById('amount');
+    const expenseList = document.getElementById('expenseList');
+    const totalEl = document.getElementById('total');
+    let totalAmount = 0;
+
+    expenseForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const description = descriptionInput.value.trim();
+      const amount = parseFloat(amountInput.value);
+      if (description === '' || isNaN(amount)) return;
+      
+      const li = document.createElement('li');
+      li.textContent = `${description}: ${amount.toFixed(2)} eur.`;
+      
+      // Кнопка удаления записи
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Удалить';
+      deleteBtn.addEventListener('click', () => {
+        expenseList.removeChild(li);
+        totalAmount -= amount;
+        updateTotal();
+      });
+      
+      li.appendChild(deleteBtn);
+      expenseList.appendChild(li);
+      
+      totalAmount += amount;
+      updateTotal();
+      
+      descriptionInput.value = '';
+      amountInput.value = '';
+    });
+
+    function updateTotal() {
+      totalEl.textContent = `Общая сумма: ${totalAmount.toFixed(2)} eur.`;
+    }
+  </script>
+</body>
+</html>
