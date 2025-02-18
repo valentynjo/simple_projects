@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Таймер обратного отсчёта</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #34495e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .countdown {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .label {
+      font-size: 18px;
+      color: #bdc3c7;
+    }
+  </style>
+</head>
+<body>
+  <div class="countdown" id="countdown">00:00:00:00</div>
+  <div class="label">Дни : Часы : Минуты : Секунды</div>
+  <script>
+    const targetDate = new Date('2026-01-01T00:00:00');
+    
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+      
+      if (diff <= 0) {
+        document.getElementById('countdown').textContent = "Время истекло!";
+        clearInterval(interval);
+        return;
+      }
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      
+      document.getElementById('countdown').textContent =
+        `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:` +
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>

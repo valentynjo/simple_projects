@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Pomodoro Таймер</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdfdfd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .timer-container {
+      text-align: center;
+      background: #ffe082;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .timer {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .start { background: #66bb6a; color: #fff; }
+    .pause { background: #ef5350; color: #fff; }
+    .reset { background: #42a5f5; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="timer-container">
+    <div class="timer" id="timer">25:00</div>
+    <button class="start" id="startBtn">Старт</button>
+    <button class="pause" id="pauseBtn">Пауза</button>
+    <button class="reset" id="resetBtn">Сброс</button>
+  </div>
+  <script>
+    let time = 25 * 60;
+    let timerInterval;
+    
+    const timerEl = document.getElementById("timer");
+    const startBtn = document.getElementById("startBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    
+    function updateTimer() {
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+      timerEl.textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      if (time <= 0) {
+        clearInterval(timerInterval);
+      }
+    }
+    
+    startBtn.addEventListener("click", () => {
+      if (!timerInterval) {
+        timerInterval = setInterval(() => {
+          time--;
+          updateTimer();
+        }, 1000);
+      }
+    });
+    
+    pauseBtn.addEventListener("click", () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    });
+    
+    resetBtn.addEventListener("click", () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      time = 25 * 60;
+      updateTimer();
+    });
+    
+    updateTimer();
+  </script>
+</body>
+</html>

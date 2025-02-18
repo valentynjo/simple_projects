@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Виджет погоды</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .weather-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .weather-info p {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="weather-container">
+    <h1>Погода</h1>
+    <select id="citySelect">
+      <option value="moscow">Киев</option>
+      <option value="spb">Житомир</option>
+      <option value="kazan">Днепр</option>
+      <option value="sochi">Одесса</option>
+    </select>
+    <div class="weather-info">
+      <p id="temperature">Температура: -- °C</p>
+      <p id="condition">Состояние: --</p>
+    </div>
+  </div>
+  <script>
+    const weatherData = {
+      moscow: { temperature: 5, condition: "Облачно" },
+      spb: { temperature: 4, condition: "Дождливо" },
+      kazan: { temperature: 7, condition: "Солнечно" },
+      sochi: { temperature: 15, condition: "Ясно" }
+    };
+    
+    const citySelect = document.getElementById("citySelect");
+    const temperatureEl = document.getElementById("temperature");
+    const conditionEl = document.getElementById("condition");
+    
+    function updateWeather() {
+      const city = citySelect.value;
+      const data = weatherData[city];
+      temperatureEl.textContent = `Температура: ${data.temperature} °C`;
+      conditionEl.textContent = `Состояние: ${data.condition}`;
+    }
+    
+    citySelect.addEventListener("change", updateWeather);
+    updateWeather();
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Фильтр поиска</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      padding: 20px;
+    }
+    .search-container {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Поиск...">
+    <ul id="itemList">
+      <li>Яблоко</li>
+      <li>Банан</li>
+      <li>Виноград</li>
+      <li>Апельсин</li>
+      <li>Киви</li>
+      <li>Манго</li>
+    </ul>
+  </div>
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const itemList = document.getElementById("itemList");
+    const items = itemList.getElementsByTagName("li");
+    
+    searchInput.addEventListener("input", function() {
+      const filter = searchInput.value.toLowerCase();
+      Array.from(items).forEach(item => {
+        if (item.textContent.toLowerCase().includes(filter)) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
