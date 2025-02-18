@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffecb3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .bmi-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      background: #8e24aa;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bmi-container">
+    <h2>BMI Calculator</h2>
+    <label for="weight">Вес (кг)</label>
+    <input type="number" id="weight" placeholder="Введите вес">
+    
+    <label for="height">Рост (см)</label>
+    <input type="number" id="height" placeholder="Введите рост">
+    
+    <button id="calculateBMI">Рассчитать</button>
+    
+    <div class="result" id="bmiResult"></div>
+  </div>
+  
+  <script>
+    const weightInput = document.getElementById('weight');
+    const heightInput = document.getElementById('height');
+    const calculateBMI = document.getElementById('calculateBMI');
+    const bmiResult = document.getElementById('bmiResult');
+    
+    calculateBMI.addEventListener('click', () => {
+      const weight = parseFloat(weightInput.value);
+      const heightCm = parseFloat(heightInput.value);
+      if (isNaN(weight) || isNaN(heightCm) || heightCm <= 0) {
+        bmiResult.textContent = 'Пожалуйста, введите корректные данные.';
+        return;
+      }
+      const heightM = heightCm / 100;
+      const bmi = weight / (heightM * heightM);
+      let category = '';
+      if (bmi < 18.5) {
+        category = 'Недостаточный вес';
+      } else if (bmi < 25) {
+        category = 'Нормальный вес';
+      } else if (bmi < 30) {
+        category = 'Избыточный вес';
+      } else {
+        category = 'Ожирение';
+      }
+      bmiResult.innerHTML = `BMI: ${bmi.toFixed(2)}<br>Категория: ${category}`;
+    });
+  </script>
+</body>
+</html>

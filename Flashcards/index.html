@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Flashcards App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e1f5fe;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .flashcard {
+      background: #fff;
+      width: 300px;
+      height: 200px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      text-align: center;
+      padding: 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      padding: 10px 20px;
+      margin: 0 5px;
+      border: none;
+      background: #00796b;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="flashcard" id="flashcard">Нажмите для показа ответа</div>
+  <div class="buttons">
+    <button id="showAnswer">Показать ответ</button>
+    <button id="nextCard">Следующая карточка</button>
+  </div>
+  
+  <script>
+    const flashcards = [
+      { question: "Столица Франции?", answer: "Париж" },
+      { question: "2 + 2 = ?", answer: "4" },
+      { question: "Самая большая планета Солнечной системы?", answer: "Юпитер" },
+      { question: "На каком языке написан этот пример?", answer: "JavaScript" }
+    ];
+    
+    let currentCardIndex = 0;
+    const flashcardEl = document.getElementById('flashcard');
+    const showAnswerBtn = document.getElementById('showAnswer');
+    const nextCardBtn = document.getElementById('nextCard');
+    
+    function showCard() {
+      const card = flashcards[currentCardIndex];
+      flashcardEl.textContent = card.question;
+    }
+    
+    showAnswerBtn.addEventListener('click', () => {
+      const card = flashcards[currentCardIndex];
+      flashcardEl.textContent = card.answer;
+    });
+    
+    nextCardBtn.addEventListener('click', () => {
+      currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+      showCard();
+    });
+    
+    showCard();
+  </script>
+</body>
+</html>

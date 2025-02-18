@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Секундомер</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e8f5e9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .stopwatch {
+      text-align: center;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .time {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      background: #42a5f5;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="stopwatch">
+    <div class="time" id="time">00:00:00</div>
+    <button id="start">Старт</button>
+    <button id="stop">Стоп</button>
+    <button id="reset">Сброс</button>
+  </div>
+  
+  <script>
+    let startTime, elapsedTime = 0, timerInterval;
+    const timeDisplay = document.getElementById('time');
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
+    const resetBtn = document.getElementById('reset');
+    
+    function timeToString(time) {
+      let diffInHrs = time / 3600000;
+      let hh = Math.floor(diffInHrs);
+      
+      let diffInMin = (diffInHrs - hh) * 60;
+      let mm = Math.floor(diffInMin);
+      
+      let diffInSec = (diffInMin - mm) * 60;
+      let ss = Math.floor(diffInSec);
+      
+      let formattedHH = hh.toString().padStart(2, '0');
+      let formattedMM = mm.toString().padStart(2, '0');
+      let formattedSS = ss.toString().padStart(2, '0');
+      
+      return `${formattedHH}:${formattedMM}:${formattedSS}`;
+    }
+    
+    function startTimer() {
+      startTime = Date.now() - elapsedTime;
+      timerInterval = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        timeDisplay.textContent = timeToString(elapsedTime);
+      }, 100);
+    }
+    
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+    
+    function resetTimer() {
+      clearInterval(timerInterval);
+      elapsedTime = 0;
+      timeDisplay.textContent = "00:00:00";
+    }
+    
+    startBtn.addEventListener('click', startTimer);
+    stopBtn.addEventListener('click', stopTimer);
+    resetBtn.addEventListener('click', resetTimer);
+  </script>
+</body>
+</html>

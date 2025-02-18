@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Конвертер валют</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e3f2fd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .converter {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      background: #42a5f5;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="converter">
+    <h2>Конвертер валют</h2>
+    <input type="number" id="amount" placeholder="Сумма" value="100">
+    <select id="fromCurrency">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="UAH">UAH</option>
+    </select>
+    <select id="toCurrency">
+      <option value="UAH">UAH</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+    </select>
+    <button id="convertBtn">Конвертировать</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const rates = {
+      USD: { UAH: 40, USD: 1, EUR: 0.88 },
+      EUR: { UAH: 43, USD: 1.14, EUR: 1 },
+      UAH: { UAH: 1, USD: 0.013, EUR: 0.011 }
+    };
+
+    const amountInput = document.getElementById('amount');
+    const fromSelect = document.getElementById('fromCurrency');
+    const toSelect = document.getElementById('toCurrency');
+    const convertBtn = document.getElementById('convertBtn');
+    const resultDiv = document.getElementById('result');
+
+    convertBtn.addEventListener('click', () => {
+      const amount = parseFloat(amountInput.value);
+      const from = fromSelect.value;
+      const to = toSelect.value;
+      if (isNaN(amount)) {
+        resultDiv.textContent = 'Введите корректную сумму';
+        return;
+      }
+      const converted = amount * rates[from][to];
+      resultDiv.textContent = `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+    });
+  </script>
+</body>
+</html>

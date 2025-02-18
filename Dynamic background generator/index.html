@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор фона</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      transition: background 0.5s;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #8e44ad;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .color-code {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Генератор случайного фона</h1>
+  <button id="changeBg">Сменить фон</button>
+  <div class="color-code" id="colorCode">#FFFFFF</div>
+  
+  <script>
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    document.getElementById('changeBg').addEventListener('click', () => {
+      const color = getRandomColor();
+      document.body.style.background = color;
+      document.getElementById('colorCode').textContent = color;
+    });
+  </script>
+</body>
+</html>
